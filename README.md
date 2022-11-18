@@ -1,3 +1,5 @@
 # Wagtail Lowdown
 
-Snippets, ideas and apps.
+- Snippets
+- Ideas
+- Apps
