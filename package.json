@@ -1,48 +1,50 @@
 {
-  "name": "codyhouse-framework",
-  "version": "3.0.11",
-  "description": "A lightweight front-end framework for building accessible, bespoke interfaces.",
-  "main": "index.js",
-  "keywords": [
-    "scss",
-    "css",
-    "framework",
-    "design-system",
-    "html",
-    "front-end",
-    "buttons",
-    "colors",
-    "forms",
-    "grid",
-    "mixins",
-    "spacing",
-    "typography",
-    "codyhouse"
-  ],
+  "name": "wagtail-lowdown",
+  "version": "1.0.0",
+  "description": "- Snippets - Ideas - Apps",
+  "main": "browser-sync.js",
+  "directories": {
+    "doc": "docs"
+  },
   "scripts": {
-    "gulp": "gulp watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "recursive-delete app/static",
+    "js": "rollup --config scripts/rollup.config.js",
+    "css": "node scripts/sass.js",
+    "svg": "svgo -f src/svg app/static/svg -r --disable=removeViewBox,removeTitle",
+    "img": "imagemin src/img/* --out-dir=app/static/img --plugin=pngquant --plugin=mozjpeg --plugin=pngcrush --plugin=zopfli",
+    "build-dirty": "npm-run-all -p js css svg img",
+    "build": "npm-run-all -s clean build-dirty",
+    "watch-css": "chokidar './src/**/*.scss' -c 'npm run css'",
+    "watch-js": "chokidar './src/**/*.js' -c 'npm run js'",
+    "watch-svg": "chokidar './src/**/*.svg' -c 'npm run svg'",
+    "watch-img": "chokidar './src/img/**/*.*' -c 'npm run img'",
+    "watch": "npm-run-all -p build watch-css watch-js watch-svg watch-img",
+    "server-start": "node scripts/browser-sync.js",
+    "server": "npm-run-all -p watch server-start"
   },
-  "author": "Amber Creative Lab <info@ambercreative.co>",
-  "license": "MIT",
-  "devDependencies": {
-    "autoprefixer": "^9.4.3",
-    "browser-sync": "^2.26.3",
-    "gulp": "^4.0.0",
-    "gulp-clean-css": "^4.3.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-postcss": "^8.0.0",
-    "gulp-purgecss": "^3.0.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-sass": "^5.0.0",
-    "gulp-sass-glob": "git+https://github.com/CodyHouse/gulp-sass-glob",
-    "gulp-uglify": "^3.0.2",
-    "sass": "^1.37.5",
-    "sass-embedded": "^1.0.0-beta.4"
-  },
-  "homepage": "https://codyhouse.co",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CodyHouse/codyhouse-framework.git"
+    "url": "git+https://github.com/nickmoreton/wagtail-lowdown.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nickmoreton/wagtail-lowdown/issues"
+  },
+  "homepage": "https://github.com/nickmoreton/wagtail-lowdown#readme",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5",
+    "recursive-fs": "^2.1.0",
+    "rollup": "^2.6.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "sass": "^1.26.5",
+    "svgo": "^1.3.2",
+    "imagemin-cli": "^6.0.0",
+    "imagemin-mozjpeg": "^8.0.0",
+    "imagemin-pngcrush": "^6.0.0",
+    "imagemin-pngquant": "^8.0.0",
+    "imagemin-zopfli": "^6.0.0",
+    "chokidar-cli": "^2.1.0",
+    "browser-sync": "^2.26.14"
   }
 }
